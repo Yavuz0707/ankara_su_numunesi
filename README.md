@@ -1,4 +1,71 @@
-🐜 Ankara Su Numunesi Toplama Rota OptimizasyonuKarınca Kolonisi Algoritması ile Gerçek Zamanlı Rota OptimizasyonuBu proje, Karınca Kolonisi Optimizasyonu (Ant Colony Optimization – ACO) algoritması kullanılarak Ankara ve çevresinde belirlenen su numunesi toplama noktaları için en kısa ve en verimli rotanın belirlenmesini amaçlamaktadır. Proje, akademik standartlara uygun olarak modüler bir yazılım mimarisi ile geliştirilmiştir.Uygulama, gerçek mesafe verileri için Google Maps Distance Matrix API, görselleştirme için Streamlit, Folium ve Matplotlib kütüphanelerini kullanmaktadır.👤 Öğrenci BilgileriAd Soyad: Şükrü YAVUZÖğrenci No: 2312729015Yöntem: Karınca Kolonisi Optimizasyonu (ACO)GitHub Repo: https://github.com/Yavuz0707/ankara-aco-rota-optimizasyonu.git🧠 Algoritma ve Yazılım MimarisiProje, kod kalabalığını önlemek ve sürdürülebilirliği artırmak amacıyla parçalı (modüler) bir yapıda kurgulanmıştır:main.py: Uygulamanın ana giriş noktası ve Streamlit arayüz yönetimi.core/: Algoritmanın "beyni" olan hesaplama motoru.ant_algorithm.py: ACO mantığı ve karınca simülasyonu.matrix_utils.py: Google API üzerinden mesafe matrisi oluşturma.data/: Lokasyon ve koordinat verilerinin yönetimi.visual/: Grafik çizim fonksiyonlarının arayüzden ayrıştırıldığı bölüm.figure/: Algoritma çıktılarının (rota ve yakınsama grafikleri) otomatik olarak kaydedildiği klasör.⚙️ Algoritma Parametreleri ve Dinamik KontrolArayüz üzerinden gerçek zamanlı olarak ayarlanabilen parametreler algoritmanın "zekasını" belirler:Karınca Sayısı: Her döngüde keşfe çıkan sanal karınca miktarı.İterasyon Sayısı: Algoritmanın kaç nesil boyunca öğrenmeye devam edeceği.Buharlaşma Oranı (Decay): Eski yolların unutulma hızı; algoritmanın yerel minimuma takılmasını önler.Alpha ($\alpha$): Karıncanın feromon izine (tecrübeye) verdiği ağırlık.Beta ($\beta$): Karıncanın fiziksel mesafeye (açgözlülük) verdiği ağırlık.📊 Görsel Çıktılar ve RaporlamaUygulama her çalışma sonunda şu çıktıları üretir:İnteraktif Harita: Folium tabanlı, durakların işaretlendiği harita.AntPath Animasyonu: Optimum rotanın izlediği yolu gösteren hareketli çizgi.Yakınsama Grafiği: Mesafenin iterasyonlar içindeki düşüşünü gösteren ve figure/convergence.png olarak kaydedilen grafik.İyileşme Oranı: İlk bulunan rota ile son bulunan rota arasındaki verimlilik farkı.🚀 Kurulum ve Çalıştırma1. Kütüphanelerin YüklenmesiBashpip install -r requirements.txt
-2. API Anahtarı YapılandırmasıHassas verilerin güvenliği için .streamlit/secrets.toml dosyası oluşturulmalı ve Google API anahtarı buraya eklenmelidir:Ini, TOMLGOOGLE_API_KEY = "API_ANAHTARINIZ"
-3. Uygulamayı BaşlatmaBashstreamlit run main.py
-📌 Sonuç ve DeğerlendirmeBu çalışma, doğadan ilham alan optimizasyon algoritmalarının gerçek yol verileriyle birleştiğinde lojistik maliyetlerini minimize edebileceğini kanıtlamaktadır. Geliştirilen modüler yapı sayesinde, farklı şehirler veya numune noktaları sisteme kolayca entegre edilebilir durumdadır.
+# 🐜 Ankara Su Numunesi Rota Optimizasyonu (ACO)
+
+Bu proje, **Ant Colony Optimization (Karınca Kolonisi Optimizasyonu)** algoritmasını kullanarak Ankara ve çevresindeki 10 farklı gölet/barajdan su numunesi toplamak için en kısa ve verimli rotayı belirlemeyi amaçlamaktadır.
+
+> **Senaryo:** Çevre Bakanlığı'na ait birimler, zaman kısıtlılığı nedeniyle Ankara'daki numune noktalarını en kısa sürede gezmek zorundadır.
+
+---
+
+## 👤 Öğrenci Bilgileri
+* **Ad Soyad:** Şükrü YAVUZ
+* **Öğrenci No:** 2312729015
+* **Ders:** Karınca Kolonisi Algoritması ile Yol Optimizasyonu
+
+---
+
+## 🚀 Proje Özellikleri
+Proje, akademik standartlara uygun modüler bir yazılım mimarisi ile geliştirilmiştir:
+
+* **Gerçek Zamanlı Veri:** Mesafeler, kuş uçuşu değil Google Maps Distance Matrix API üzerinden **gerçek yol mesafeleri (driving distance)** kullanılarak hesaplanır.
+* **Dinamik Parametre Yönetimi:** Kullanıcı arayüzü üzerinden $\alpha$, $\beta$, buharlaşma oranı, karınca sayısı ve iterasyon miktarı anlık olarak değiştirilebilir.
+* **Görselleştirme:** * **İnteraktif Harita:** Folium tabanlı, durakların ve rotanın animasyonlu (AntPath) gösterimi.
+    * **Yakınsama Grafiği:** Algoritmanın her iterasyonda en iyi sonuca nasıl yaklaştığını gösteren Matplotlib grafiği.
+* **Güvenlik:** API anahtarları `.streamlit/secrets.toml` içerisinde izole edilmiştir.
+
+---
+
+## 🛠️ Yazılım Mimarisi (Dosya Düzeni)
+Proje, sürdürülebilirlik için parçalı (modüler) bir yapıda kurgulanmıştır:
+
+* `main.py`: Uygulamanın ana giriş noktası ve Streamlit arayüz yönetimi.
+* `core/ant_algorithm.py`: ACO mantığının ve olasılıksal seçim mekanizmasının bulunduğu hesaplama motoru.
+* `data/coordinates.py`: 10 farklı lokasyonun (Mogan, Eymir, Soğuksu vb.) hassas koordinat verileri.
+* `visual/`: Grafik ve harita çizim fonksiyonlarının arayüzden ayrıştırıldığı bölüm.
+
+---
+
+## 🧪 Algoritma Parametreleri
+Algoritmanın başarısını belirleyen temel "zeka" ayarları:
+1.  **Karınca Sayısı:** Her döngüde keşfe çıkan sanal karınca miktarı.
+2.  **İterasyon Sayısı:** Algoritmanın kaç nesil boyunca öğrenmeye devam edeceği.
+3.  **Buharlaşma Oranı (Decay):** Eski yolların unutulma hızı (Yerel minimuma takılmayı önler).
+4.  **Alpha ($\alpha$):** Karıncanın feromon izine (tecrübeye) verdiği ağırlık.
+5.  **Beta ($\beta$):** Karıncanın fiziksel mesafeye (açgözlülük) verdiği ağırlık.
+
+---
+
+## 📦 Kurulum ve Çalıştırma
+
+1.  **Kütüphanelerin Yüklenmesi:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+2.  **API Anahtarı Yapılandırması:**
+    `.streamlit/secrets.toml` dosyası oluşturulmalı ve Google API anahtarı eklenmelidir:
+    ```toml
+    GOOGLE_API_KEY = "BURAYA_API_ANAHTARINIZI_YAZIN"
+    ```
+
+3.  **Uygulamayı Başlatma:**
+    ```bash
+    streamlit run main.py
+    ```
+
+---
+
+## 📊 Sonuç ve Değerlendirme
+Bu çalışma, doğadan ilham alan optimizasyon algoritmalarının gerçek yol verileriyle birleştiğinde lojistik maliyetlerini nasıl minimize edebileceğini kanıtlamaktadır. Geliştirilen modüler yapı sayesinde sisteme yeni lokasyonlar kolayca entegre edilebilir.
+
+---
+🔗 **GitHub Repo:** [https://github.com/Yavuz0707/ankara-aco-rota-optimizasyonu.git](https://github.com/Yavuz0707/ankara-aco-rota-optimizasyonu.git)
