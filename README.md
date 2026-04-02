@@ -10,7 +10,7 @@ Bu proje, **Ant Colony Optimization (Karınca Kolonisi Optimizasyonu)** algoritm
 
 - **Ad Soyad:** Şükrü YAVUZ
 - **Öğrenci No:** 2312729015
-- **Ders:** Karınca Kolonisi Algoritması ile Yol Optimizasyonu.,
+- **Ders:** Karınca Kolonisi Algoritması ile Yol Optimizasyonu.
 
 ---
 
